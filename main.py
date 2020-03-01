@@ -69,6 +69,7 @@ load_files(CUBFilepath + "attributes\\certainties.txt", "certainty_string", cert
 load_files(attributesFilepath + "attributes.txt", "attribute_string", attribute_definitions)
 
 # iterate through dict of image_ids
+# for x in range(1, 10):
 for x in range(1, len(image_id_summary)+1):
 	# add class definition to be used as directory to locate individual image files
 	for key, value in class_definitions.items():
@@ -100,10 +101,18 @@ plt.show()
 
 train = []
 test = []
+image_sizes_h = []
+image_sizes_w = []
+box_sizes_h = []
+box_sizes_w = []
 
 # split data based on train/test labels
 # for x in range(1, 10):
 for x in range(1, len(image_id_summary)+1):
+	image_sizes_h.append(image_id_summary[str(x)]['image'].size[0])
+	image_sizes_w.append(image_id_summary[str(x)]['image'].size[1])
+	box_sizes_h.append(float(image_id_summary[str(x)]['image_bounding_box'][3]))
+	box_sizes_w.append(float(image_id_summary[str(x)]['image_bounding_box'][2]))
 	if image_id_summary[str(x)]['train_test_split'] == '0':
 		train.append(image_id_summary[str(x)])
 	else:
@@ -113,6 +122,14 @@ for x in range(1, len(image_id_summary)+1):
 # Test Records: 5994
 print("Training Records", len(train))
 print("Test Records", len(test))
+
+
+# maximum image height: 497, minimum image width: 500
+print(max(box_sizes_h))
+print(max(box_sizes_w))
+# minimum image height: 120, minimum image width: 121
+print(min(image_sizes_h))
+print(min(image_sizes_w))
 
 
 # print(class_definitions)

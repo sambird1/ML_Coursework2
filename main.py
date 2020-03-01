@@ -1,5 +1,5 @@
 import os
-from matplotlib import pyplot
+import matplotlib.pyplot as plt
 import json
 
 with open("config.json", 'r') as configfile:
@@ -93,10 +93,10 @@ print(image_id_summary['1'])
 print(len(image_id_summary))
 
 # to display image data from arrays
-pyplot.imshow(image_id_summary['1']['image'])
-pyplot.show()
-pyplot.imshow(image_id_summary['1']['image_segmentation'])
-pyplot.show()
+plt.imshow(image_id_summary['1']['image'])
+plt.show()
+plt.imshow(image_id_summary['1']['image_segmentation'])
+plt.show()
 
 # print(class_definitions)
 # print(parts_definitions)

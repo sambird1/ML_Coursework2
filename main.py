@@ -76,10 +76,10 @@ for x in range(1, len(image_id_summary)+1):
 			image_id_summary[str(x)]['image_class_string'] = value
 	# read in image files
 	image_filepath = current_directory + CUBFilepath + "images\\"+ image_id_summary[str(x)]['image_class_string'] + '\\' +image_id_summary[str(x)]['image_filename']
-	image_id_summary[str(x)]['image'] = pyplot.imread(image_filepath)
+	image_id_summary[str(x)]['image'] = plt.imread(image_filepath)
 	# read in segemented image files
 	segmentation_filepath = current_directory + segmentationsFilepath + image_id_summary[str(x)]['image_class_string'] + '\\' +image_id_summary[str(x)]['image_filename'][:-4] + ".png"
-	image_id_summary[str(x)]['image_segmentation'] = pyplot.imread(segmentation_filepath)
+	image_id_summary[str(x)]['image_segmentation'] = plt.imread(segmentation_filepath)
 	# append the class level attribute presence value to each attribute
 	for key, value in attributedict.items():
 		if key == image_id_summary[str(x)]['image_class_label']:

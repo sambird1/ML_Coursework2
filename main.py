@@ -98,6 +98,23 @@ plt.show()
 plt.imshow(image_id_summary['1']['image_segmentation'])
 plt.show()
 
+train = []
+test = []
+
+# split data based on train/test labels
+# for x in range(1, 10):
+for x in range(1, len(image_id_summary)+1):
+	if image_id_summary[str(x)]['train_test_split'] == '0':
+		train.append(image_id_summary[str(x)])
+	else:
+		test.append(image_id_summary[str(x)])
+
+# Training Records: 5794
+# Test Records: 5994
+print("Training Records", len(train))
+print("Test Records", len(test))
+
+
 # print(class_definitions)
 # print(parts_definitions)
 # print(attribute_definitions)

@@ -1,5 +1,5 @@
 # ML_Coursework2
-Hi guys. 
+Hi guys.
 
 I've set up a workspace for our project here.
 
@@ -10,3 +10,14 @@ Let's try to comment on our commits so we know what we did at which point and wh
 Cheers,
 
 Gerard
+
+
+
+Files:
+
+main.py
+Python script to load in dataset.
+
+config_example.json
+Contains example format for config.json file (not tracked) so individual team members can set their own local
+filepath locations without needing to amend the main python file.

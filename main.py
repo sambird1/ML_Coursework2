@@ -1,5 +1,13 @@
 import os
 import matplotlib.pyplot as plt
+import json
+
+with open("config.json", 'r') as configfile:
+	config = json.load(configfile)
+
+segmentationsFilepath = config['segmentationsFilepath']
+CUBFilepath = config['CUBFilepath']
+attributesFilepath = config['attributesFilepath']
 
 # create empty dicts to add data to
 image_id_summary = {}
@@ -48,17 +56,17 @@ def load_files(filename, key, dict_type):
 				attributedict[str(idx)][str(x+1)] = item2[x]
 	return
 
-load_files("\\CUB_200_2011\\images.txt", "image_filename", image_id_summary)
-load_files("\\CUB_200_2011\\image_class_labels.txt", "image_class_label", image_id_summary)
-load_files("\\CUB_200_2011\\bounding_boxes.txt", "image_bounding_box", image_id_summary)
-load_files("\\CUB_200_2011\\train_test_split.txt", "train_test_split", image_id_summary)
-load_files("\\CUB_200_2011\\classes.txt", "class_string", class_definitions)
-load_files("\\CUB_200_2011\\parts\\part_locs.txt", "image_part_location", image_id_summary)
-load_files("\\CUB_200_2011\\parts\\parts.txt", "part_string", parts_definitions)
-load_files("\\CUB_200_2011\\attributes\\image_attribute_labels.txt", "image_attribute_labels", image_id_summary)
-load_files("\\CUB_200_2011\\attributes\\class_attribute_labels_continuous.txt", "class_attribute_certainty", attributedict)
-load_files("\\CUB_200_2011\\attributes\\certainties.txt", "certainty_string", certainty_definitions)
-load_files("\\attributes.txt", "attribute_string", attribute_definitions)
+load_files(CUBFilepath + "images.txt", "image_filename", image_id_summary)
+load_files(CUBFilepath + "image_class_labels.txt", "image_class_label", image_id_summary)
+load_files(CUBFilepath + "bounding_boxes.txt", "image_bounding_box", image_id_summary)
+load_files(CUBFilepath + "train_test_split.txt", "train_test_split", image_id_summary)
+load_files(CUBFilepath + "classes.txt", "class_string", class_definitions)
+load_files(CUBFilepath + "parts\\part_locs.txt", "image_part_location", image_id_summary)
+load_files(CUBFilepath + "parts\\parts.txt", "part_string", parts_definitions)
+load_files(CUBFilepath + "attributes\\image_attribute_labels.txt", "image_attribute_labels", image_id_summary)
+load_files(CUBFilepath + "attributes\\class_attribute_labels_continuous.txt", "class_attribute_certainty", attributedict)
+load_files(CUBFilepath + "attributes\\certainties.txt", "certainty_string", certainty_definitions)
+load_files(attributesFilepath + "attributes.txt", "attribute_string", attribute_definitions)
 
 # iterate through dict of image_ids
 for x in range(1, len(image_id_summary)+1):
@@ -67,11 +75,11 @@ for x in range(1, len(image_id_summary)+1):
 		if key == image_id_summary[str(x)]['image_class_label']:
 			image_id_summary[str(x)]['image_class_string'] = value
 	# read in image files
-	image_filepath = current_directory + "\\CUB_200_2011\\images\\"+ image_id_summary[str(x)]['image_class_string'] + '\\' +image_id_summary[str(x)]['image_filename']
-	image_id_summary[str(x)]['image'] = pyplot.imread(image_filepath)
+	image_filepath = current_directory + CUBFilepath + "images\\"+ image_id_summary[str(x)]['image_class_string'] + '\\' +image_id_summary[str(x)]['image_filename']
+	image_id_summary[str(x)]['image'] = plt.imread(image_filepath)
 	# read in segemented image files
-	segmentation_filepath = current_directory + "\\segmentations\\"+ image_id_summary[str(x)]['image_class_string'] + '\\' +image_id_summary[str(x)]['image_filename'][:-4] + ".png"
-	image_id_summary[str(x)]['image_segmentation'] = pyplot.imread(segmentation_filepath)
+	segmentation_filepath = current_directory + segmentationsFilepath + image_id_summary[str(x)]['image_class_string'] + '\\' +image_id_summary[str(x)]['image_filename'][:-4] + ".png"
+	image_id_summary[str(x)]['image_segmentation'] = plt.imread(segmentation_filepath)
 	# append the class level attribute presence value to each attribute
 	for key, value in attributedict.items():
 		if key == image_id_summary[str(x)]['image_class_label']:

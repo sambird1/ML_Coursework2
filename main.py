@@ -78,7 +78,7 @@ for x in range(1, len(image_id_summary)+1):
 	# read in image files
 	image_filepath = current_directory + CUBFilepath + "images\\"+ image_id_summary[str(x)]['image_class_string'] + '\\' +image_id_summary[str(x)]['image_filename']
 	image_id_summary[str(x)]['image'] = plt.imread(image_filepath)
-	# read in segemented image files
+	# read in segmented image files
 	segmentation_filepath = current_directory + segmentationsFilepath + image_id_summary[str(x)]['image_class_string'] + '\\' +image_id_summary[str(x)]['image_filename'][:-4] + ".png"
 	image_id_summary[str(x)]['image_segmentation'] = plt.imread(segmentation_filepath)
 	# append the class level attribute presence value to each attribute
@@ -109,12 +109,13 @@ box_sizes_w = []
 # split data based on train/test labels
 # for x in range(1, 10):
 for x in range(1, len(image_id_summary)+1):
-	image_sizes_h.append(image_id_summary[str(x)]['image'].size[0])
-	image_sizes_w.append(image_id_summary[str(x)]['image'].size[1])
+	image_sizes_h.append(image_id_summary[str(x)]['image'].shape[0])
+	image_sizes_w.append(image_id_summary[str(x)]['image'].shape[1])
 	box_sizes_h.append(float(image_id_summary[str(x)]['image_bounding_box'][3]))
 	box_sizes_w.append(float(image_id_summary[str(x)]['image_bounding_box'][2]))
 	if image_id_summary[str(x)]['train_test_split'] == '0':
 		train.append(image_id_summary[str(x)])
+
 	else:
 		test.append(image_id_summary[str(x)])
 

@@ -4,3 +4,6 @@ https://towardsdatascience.com/wtf-is-image-classification-8e78a8235acb
 
 Transfer Learning for Image Classification
 https://machinelearningmastery.com/transfer-learning-for-deep-learning/
+
+Reading in Images with Pillow:
+https://machinelearningmastery.com/how-to-load-and-manipulate-images-for-deep-learning-in-python-with-pil-pillow/

@@ -1,6 +1,9 @@
 import os
 import matplotlib.pyplot as plt
 import json
+from PIL import ImageOps, Image
+import math
+import numpy as np
 
 with open("config.json", 'r') as configfile:
 	config = json.load(configfile)
@@ -68,6 +71,9 @@ load_files(CUBFilepath + "attributes\\class_attribute_labels_continuous.txt", "c
 load_files(CUBFilepath + "attributes\\certainties.txt", "certainty_string", certainty_definitions)
 load_files(attributesFilepath + "attributes.txt", "attribute_string", attribute_definitions)
 
+maxwidth = 500
+maxheight = 500
+
 # iterate through dict of image_ids
 # for x in range(1, 10):
 for x in range(1, len(image_id_summary)+1):
@@ -77,10 +83,28 @@ for x in range(1, len(image_id_summary)+1):
 			image_id_summary[str(x)]['image_class_string'] = value
 	# read in image files
 	image_filepath = current_directory + CUBFilepath + "images\\"+ image_id_summary[str(x)]['image_class_string'] + '\\' +image_id_summary[str(x)]['image_filename']
-	image_id_summary[str(x)]['image'] = plt.imread(image_filepath)
+	# image abnd image segment variables commented out as Memory Errors experienced generating original and padded versions of each image
+	# image_id_summary[str(x)]['image'] = plt.imread(image_filepath)
+	# pad image to standard 500 x 500 pixels size
+	with Image.open(image_filepath) as image_jpg:
+		image_height = image_jpg.size[0]
+		image_width = image_jpg.size[1]
+		height_diff = maxheight - image_height
+		width_diff = maxwidth - image_width
+		pad = (height_diff//2, width_diff//2, math.ceil(height_diff/2), math.ceil(width_diff/2))
+		image_id_summary[str(x)]['image_padded'] = np.array(ImageOps.expand(image_jpg, pad))
 	# read in segmented image files
 	segmentation_filepath = current_directory + segmentationsFilepath + image_id_summary[str(x)]['image_class_string'] + '\\' +image_id_summary[str(x)]['image_filename'][:-4] + ".png"
-	image_id_summary[str(x)]['image_segmentation'] = plt.imread(segmentation_filepath)
+	# image_id_summary[str(x)]['image_segmentation'] = plt.imread(segmentation_filepath)
+	# pad image segemnts to standard 500 x 500 pixels size
+	with Image.open(segmentation_filepath) as segment:
+		segment_height = segment.size[0]
+		segment_width = segment.size[1]
+		height_diff = maxheight - segment_height
+		width_diff = maxwidth - segment_width
+		pad = (height_diff//2, width_diff//2, math.ceil(height_diff/2), math.ceil(width_diff/2))
+		image_id_summary[str(x)]['image_segmentation_padded'] = np.array(ImageOps.expand(ImageOps.expand(segment, pad)))
+
 	# append the class level attribute presence value to each attribute
 	for key, value in attributedict.items():
 		if key == image_id_summary[str(x)]['image_class_label']:
@@ -94,9 +118,9 @@ print(image_id_summary['1'])
 print(len(image_id_summary))
 
 # to display image data from arrays
-plt.imshow(image_id_summary['1']['image'])
+plt.imshow(image_id_summary['1']['image_padded'])
 plt.show()
-plt.imshow(image_id_summary['1']['image_segmentation'])
+plt.imshow(image_id_summary['1']['image_segmentation_padded'])
 plt.show()
 
 train = []
@@ -111,8 +135,8 @@ box_sizes_w = []
 # split data based on train/test labels
 # for x in range(1, 10):
 for x in range(1, len(image_id_summary)+1):
-	image_sizes_h.append(image_id_summary[str(x)]['image'].shape[0])
-	image_sizes_w.append(image_id_summary[str(x)]['image'].shape[1])
+	# image_sizes_h.append(image_id_summary[str(x)]['image'].shape[0])
+	# image_sizes_w.append(image_id_summary[str(x)]['image'].shape[1])
 	box_sizes_h.append(float(image_id_summary[str(x)]['image_bounding_box'][3]))
 	box_sizes_w.append(float(image_id_summary[str(x)]['image_bounding_box'][2]))
 	if image_id_summary[str(x)]['train_test_split'] == '0':
@@ -139,11 +163,15 @@ for x in range(1,201) :
 	print(x, "Train Records: ", train_class[str(x)], "Test Records: ", test_class[str(x)], "Test Proportion: ", test_class[str(x)]/(test_class[str(x)]+train_class[str(x)]), "Train Proportion: ", train_class[str(x)]/(train_class[str(x)]+test_class[str(x)]))
 
 # maximum image height: 497, minimum image width: 500
-print(max(box_sizes_h))
-print(max(box_sizes_w))
+# print(max(box_sizes_h))
+# print(max(box_sizes_w))
 # minimum image height: 120, minimum image width: 121
-print(min(image_sizes_h))
-print(min(image_sizes_w))
+# print(min(image_sizes_h))
+# print(min(image_sizes_w))
+
+
+
+# TO DO: image_bounding_box and image_part_coordinates, need to be shifted to account for padding
 
 
 # print(class_definitions)

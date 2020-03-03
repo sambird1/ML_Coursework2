@@ -1,7 +1,7 @@
 import pandas as pd
 
-bird_labs = pd.read_csv(r'/home/c1422205/Documents/Modules/AML/bird_labs.csv', low_memory=False)
-parts = pd.read_csv(r'/home/c1422205/Documents/Modules/AML/parts.csv', low_memory=False)
+bird_labs = pd.read_csv(bird_labs.csv', low_memory=False)
+parts = pd.read_csv(parts.csv', low_memory=False)
 
-bounding_box = pd.read_csv(r'/home/c1422205/Documents/Modules/AML/CUB_200_2011/CUB_200_2011/bounding_boxes.txt', sep=" ", header=None)
+bounding_box = pd.read_csv(bounding_boxes.txt', sep=" ", header=None)
 bounding_box.columns = ['image_id', 'x', 'y', 'width', 'height']

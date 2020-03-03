@@ -101,6 +101,8 @@ plt.show()
 
 train = []
 test = []
+train_class = {}
+test_class = {}
 image_sizes_h = []
 image_sizes_w = []
 box_sizes_h = []
@@ -115,15 +117,26 @@ for x in range(1, len(image_id_summary)+1):
 	box_sizes_w.append(float(image_id_summary[str(x)]['image_bounding_box'][2]))
 	if image_id_summary[str(x)]['train_test_split'] == '0':
 		train.append(image_id_summary[str(x)])
+		if image_id_summary[str(x)]['image_class_label'] in train_class:
+			train_class[image_id_summary[str(x)]['image_class_label']] +=1
+		else:
+			train_class[image_id_summary[str(x)]['image_class_label']] = 1
 
 	else:
 		test.append(image_id_summary[str(x)])
+		if image_id_summary[str(x)]['image_class_label'] in test_class:
+			test_class[image_id_summary[str(x)]['image_class_label']] +=1
+		else:
+			test_class[image_id_summary[str(x)]['image_class_label']] = 1
 
 # Training Records: 5794
 # Test Records: 5994
 print("Training Records", len(train))
 print("Test Records", len(test))
 
+# check split between test and train by class
+for x in range(1,201) :
+	print(x, "Train Records: ", train_class[str(x)], "Test Records: ", test_class[str(x)], "Test Proportion: ", test_class[str(x)]/(test_class[str(x)]+train_class[str(x)]), "Train Proportion: ", train_class[str(x)]/(train_class[str(x)]+test_class[str(x)]))
 
 # maximum image height: 497, minimum image width: 500
 print(max(box_sizes_h))

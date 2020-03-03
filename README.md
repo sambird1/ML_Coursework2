@@ -21,3 +21,6 @@ Python script to load in dataset.
 config_example.json
 Contains example format for config.json file (not tracked) so individual team members can set their own local
 filepath locations without needing to amend the main python file.
+
+alternate_read
+Contains a couple of lines to read in all bird labels and part locations into DataFrames for easy viewing. Problem with parsing in the attributes and still working on best way toget image data in the dfs. New csv files can be found in your emails.

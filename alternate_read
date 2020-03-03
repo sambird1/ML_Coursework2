@@ -1,7 +1,8 @@
 import pandas as pd
+from matplotlib import image
 
-bird_labs = pd.read_csv(bird_labs.csv', low_memory=False)
-parts = pd.read_csv(parts.csv', low_memory=False)
-
-bounding_box = pd.read_csv(bounding_boxes.txt', sep=" ", header=None)
-bounding_box.columns = ['image_id', 'x', 'y', 'width', 'height']
+birds = pd.read_csv('bird_labs.csv', low_memory=False)
+attributes = pd.read_csv('attributes.csv', low_memory=False)
+certainties = pd.read_csv('certainties.csv', low_memory=False)
+parts = pd.read_csv('parts.csv', low_memory=False)
+class_labs_continuous = pd.read_csv('class_labs_continuous.csv', low_memory=False)

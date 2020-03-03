@@ -23,8 +23,7 @@ Contains example format for config.json file (not tracked) so individual team me
 filepath locations without needing to amend the main python file.
 
 alternate_read.py
-5 line read in for pandas DataFrames. Input are 5 csv files for
----------------------------------------------------------------
+5 line read in for pandas DataFrames. Input are 5 csv files for:
 IMAGES AND CLASS LABELS & BOUNDING BOXES in bird_labs.csv
 PART LOCATIONS in parts.csv
 ATTRIBUTE LABELS in attributes.csv, certainties.csv & class_labs_continuous.csv

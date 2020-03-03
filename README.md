@@ -24,3 +24,6 @@ filepath locations without needing to amend the main python file.
 
 alternate_read
 Contains a couple of lines to read in all bird labels and part locations into DataFrames for easy viewing. Problem with parsing in the attributes and still working on best way toget image data in the dfs. New csv files can be found in your emails.
+
+create_csv.py
+Contains code used to concatenate the new csv files.
